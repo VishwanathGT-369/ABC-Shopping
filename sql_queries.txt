@@ -1,0 +1,36 @@
+CREATE DATABSE ESHOPPINGDB;
+
+USE ESHOPPINGDB;
+
+CREATE TABLE USER(UID INT AUTO_INCREMENT PRIMARY KEY,
+                  UNAME VARCHAR(20) NOT NULL ,
+                  PASSWORD VARCHAR(20) NOT NULL ,
+                  USERNAME VARCHAR(30) NOT NULL,
+                  USER_TYPE VARCHAR(10));
+
+CREATE TABLE ITEM(ITEM_ID INT AUTO_INCREMENT PRIMARY KEY,
+                  NAME VARCHAR(20) NOT NULL ,
+                  DESCRIPTION VARCHAR(100),
+                  PRICE DOUBLE NOT NULL);
+
+CREATE TABLE ORDERS(ORDER_ID INT AUTO_INCREMENT PRIMARY KEY,
+                    UID INT,
+                    ITEM_COUNT INT,
+                    date DATE,
+                    TOTAL_BILL DOUBLE,
+                    constraint ORDER_USER_FK foreign key (UID) references USER (UID)
+);
+
+CREATE TABLE ORDER_ITEMS(ITEM_ID INT,
+                         ORDER_ID INT,
+                         constraint ITEM_ORDER_FK foreign key (ITEM_ID) references ITEM (ITEM_ID),
+                         constraint ORDER_ITEM_FK foreign key (ORDER_ID) references ORDERS (ORDER_ID));
+
+INSERT INTO USER (UNAME, PASSWORD, USERNAME, USER_TYPE) VALUE ('vinuta@gmail.com', 'password', 'Vinuta Soratoor', 'CUSTOMER');
+INSERT INTO USER (UNAME, PASSWORD, USERNAME, USER_TYPE) VALUE ('admin@abc.com', 'Admin', 'Administrator', 'ADMIN');
+
+INSERT INTO ITEM (NAME, DESCRIPTION, PRICE) values ('Dell Laptop', 'Laptop with Intell core processor', 10000);
+INSERT INTO ITEM (NAME, DESCRIPTION, PRICE) values ('Mouse', 'Perfect mouse for your PC', 600);
+INSERT INTO ITEM (NAME, DESCRIPTION, PRICE) values ('Keyboard', 'Windows PC keyboard', 1000);
+INSERT INTO ITEM (NAME, DESCRIPTION, PRICE) values ('Joy Stick', 'Gaming Joy STick', 5000);
+INSERT INTO ITEM (NAME, DESCRIPTION, PRICE) values ('Monitor', 'Monitor with 17" display', 6000);
